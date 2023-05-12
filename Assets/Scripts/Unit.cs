@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -65,6 +66,10 @@ public class Unit : MonoBehaviour
             transform.LookAt(_tileTo.transform);
             if (_rotationProgress < 1)
             {
+                if (Mathf.Abs(_rotationFrom.y - _rotationTo.y) > 200)
+                {
+                    _rotationFrom.y = -_rotationFrom.y;
+                }
                 _rotationProgress += _rotationSpeed * Time.deltaTime;
                 transform.eulerAngles = Vector3.LerpUnclamped(_rotationFrom, _rotationTo, _rotationProgress);
             }
@@ -74,13 +79,9 @@ public class Unit : MonoBehaviour
                 {
                     _tileTo = _path.Dequeue();
                     OnNewTileSet?.Invoke(_tileTo);
-                    _rotationFrom = transform.eulerAngles;
+                    _rotationFrom = ValidateRotation(transform.eulerAngles);
                     transform.LookAt(_tileTo.transform);
-                    _rotationTo = transform.eulerAngles;
-                    if (_rotationTo.y > 180)
-                    {
-                        _rotationTo.y = -360 + _rotationTo.y;
-                    }
+                    _rotationTo = ValidateRotation(transform.eulerAngles);
                     transform.eulerAngles = _rotationFrom;
                     _rotationProgress = 0f;
                 }
@@ -91,6 +92,15 @@ public class Unit : MonoBehaviour
                 }
             }
         }
+    }
+
+    private Vector3 ValidateRotation(Vector3 rotation)
+    {
+        if (rotation.y > 180)
+        {
+            rotation.y = -360 + rotation.y;
+        }
+        return rotation;
     }
 
     private bool ReachedTile(GameTile tile)

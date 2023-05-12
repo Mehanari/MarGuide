@@ -200,7 +200,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1487805974}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 6.7, y: 27.68, z: 8}
+  m_LocalPosition: {x: 19.6, y: 17.55, z: 11.84}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -311,6 +311,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2030286191}
   - component: {fileID: 2030286192}
+  - component: {fileID: 2030286193}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -347,9 +348,47 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _board: {fileID: 2038471160}
   _boardSize: {x: 150, y: 30}
+  _unitSpawnPoint: {x: 7, y: 23}
+  _startPartLength: 10
+  _endPartLength: 10
+  _mapBorderWidth: 5
   _mapGenerator: {fileID: 2038471161}
+  _viewFactory: {fileID: 2030286193}
   _oxygenChunkSize: 5
   _camera: {fileID: 1487805976}
+  _unitPrefab: {fileID: 350048279210273902, guid: c31cf7595a1b3d84eb2bc82fbd4dfba1, type: 3}
+  _validPathColor: {r: 0, g: 1, b: 0.0033602715, a: 0}
+  _violatedPathColor: {r: 1, g: 0, b: 0, a: 0}
+  _busyPathColor: {r: 1, g: 0.4529273, b: 0, a: 0}
+--- !u!114 &2030286193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2030286190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19d1caba3cd43b74d924db401fe89d50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mountainViews:
+  - {fileID: 3681394575540176195, guid: aaa1d40917d464149b4c9f89a4a08f97, type: 3}
+  - {fileID: 3681394575540176195, guid: 42e0c25133a862f468b36c08e3d33fe2, type: 3}
+  - {fileID: 3681394575540176195, guid: 1bf043837d6cf5a4d93f328924ffbf79, type: 3}
+  _acidViews:
+  - {fileID: 3681394575540176195, guid: 12e401da83339c04da3c98c53a26f13a, type: 3}
+  - {fileID: 3681394575540176195, guid: a56cb09b003005d46ae6a84e92972fd9, type: 3}
+  _groundViews:
+  - {fileID: 3681394575540176195, guid: 3c37d6b3876f3c5428f0172b6657482f, type: 3}
+  - {fileID: 3681394575540176195, guid: 1a00e657c95e22249ac8808b5ef6ae99, type: 3}
+  - {fileID: 3681394575540176195, guid: e7ce234374dd5c540a3cb175021acbca, type: 3}
+  - {fileID: 3681394575540176195, guid: 7286703af04af1b46bf475e6859fd849, type: 3}
+  - {fileID: 3681394575540176195, guid: 6e04604fa56b117429d1ef1cdd889e75, type: 3}
+  _borderViews:
+  - {fileID: 3681394575540176195, guid: 1e3dcf5d9bb7cf741aac1087ceb979b5, type: 3}
+  - {fileID: 3681394575540176195, guid: 722371779dcd35b4a9104eb1d66423be, type: 3}
+  - {fileID: 3681394575540176195, guid: c58055acb6e45154882e6101c8712c5c, type: 3}
 --- !u!1 &2038471158
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,9 +435,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tilePrefab: {fileID: 5920347171519509192, guid: 79940e9c1c786b6499e1ffbdb0f678d2, type: 3}
-  _groundPrefab: {fileID: 5046084248441257398, guid: 19afe4cf08741034897fedcc38edb185, type: 3}
-  _mountainPrefab: {fileID: 3681394575540176195, guid: aaa1d40917d464149b4c9f89a4a08f97, type: 3}
-  _acidPrefab: {fileID: -3978622711195717883, guid: 63286693152b65641a2ba09d395a2ad5, type: 3}
   _oxygenTankPrefab: {fileID: 2518319262506996495, guid: eec0faabea1bf0843942f3e8373b4ec7, type: 3}
   _tilesMask:
     serializedVersion: 2
@@ -418,3 +454,4 @@ MonoBehaviour:
   _acidLakesDensity: 45
   _acidLakesGenerationIterationsCount: 2
   _pathPartMaxLength: 3
+  _canyonsWidth: 2

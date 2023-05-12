@@ -4,24 +4,24 @@ using UnityEngine;
 public class GameBoard : MonoBehaviour
 {
     [SerializeField] private GameTile _tilePrefab;
-    [SerializeField] private GameTileView _groundPrefab;
-    [SerializeField] private GameTileView _mountainPrefab;
-    [SerializeField] private GameTileView _acidPrefab;
     [SerializeField] private GameObject _oxygenTankPrefab;
     [SerializeField] private LayerMask _tilesMask;
 
-
+    private TileViewFactory _viewFactory;
     private MapGenerator _generator;
     private Vector2Int _boardSize;
     private TileType[,] _typeMap;
     private GameTile[,] _tiles;
 
-    public void InitializeBoard(Vector2Int size, MapGenerator generator, int oxygenChunkSize)
+    public void InitializeBoard(Vector2Int size, int startPartLength, int endPartLength, int mapBorderWidth, MapGenerator generator, int oxygenChunkSize, TileViewFactory factory)
     {
         _boardSize = size;
+        _boardSize.x += startPartLength + endPartLength + 2*mapBorderWidth;
+        _boardSize.y += 2 * mapBorderWidth;
         _generator = generator;
+        _viewFactory = factory;
         _tiles = new GameTile[_boardSize.x, _boardSize.y];
-        _typeMap = _generator.GenerateMap(size.x, size.y);
+        _typeMap = _generator.GenerateMap(size.x, size.y, startPartLength, endPartLength, mapBorderWidth);
         GenerateTiles();
         PlaceOxygen(oxygenChunkSize);
     }
@@ -43,21 +43,8 @@ public class GameBoard : MonoBehaviour
         _tiles[x, y].transform.localPosition = new Vector3(y, 0, x);
         _tiles[x, y].Type = _typeMap[x, y];
         _tiles[x, y].Coordinates = new Vector2Int(x, y);
-        switch (_tiles[x, y].Type)
-        {
-            case TileType.Mountain:
-                _tiles[x, y].SetView(_mountainPrefab, 0);
-                break;
-            case TileType.Ground:
-                _tiles[x, y].SetView(_groundPrefab, 0);
-                break;
-            case TileType.Acid:
-                _tiles[x, y].SetView(_acidPrefab, 0);
-                break;
-            default:
-                _tiles[x, y].SetView(_groundPrefab, 0);
-                break;
-        }
+        int rotation = Random.Range(0, 4) * 90;
+        _tiles[x, y].SetView(_viewFactory.GetView(_tiles[x, y].Type), rotation);
     }
 
     private void PlaceOxygen(int chunkSize)

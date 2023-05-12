@@ -5,29 +5,51 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private int _acidLakesDensity;
     [SerializeField] private int _acidLakesGenerationIterationsCount = 2;
     [SerializeField] private int _pathPartMaxLength = 3;
+    [SerializeField] private int _canyonsWidth = 2;
 
     private int _mapHeight;
     private int _mapWidth;
 
 
 
-    public TileType[,] GenerateMap(int mapHeight, int mapWidth)
+    public TileType[,] GenerateMap(int mapHeight, int mapWidth, int startPartLength, int endPartLength, int mapBorderWidth)
     {
         _mapHeight = mapHeight;
         _mapWidth = mapWidth;
 
-        TileType[,] map = new TileType[_mapHeight, _mapWidth];
-        GenerateWallsAndLakes(map);
-        SurroundLakesWithFloor(map);
+        TileType[,] map = new TileType[_mapHeight + startPartLength + endPartLength + mapBorderWidth*2, _mapWidth + mapBorderWidth*2];
+        for (int x = mapBorderWidth; x < mapBorderWidth + startPartLength; x++)
+        {
+            for (int y = mapBorderWidth; y < map.GetLength(1) - mapBorderWidth; y++)
+            {
+                map[x, y] = TileType.Ground;
+            }
+        }
+        for (int x = map.GetLength(0) - mapBorderWidth - endPartLength; x < map.GetLength(0) - mapBorderWidth; x++)
+        {
+            for (int y = mapBorderWidth; y < map.GetLength(1) - mapBorderWidth; y++)
+            {
+                map[x, y] = TileType.Ground;
+            }
+        }
+        TileType[,] generatedMap = new TileType[_mapHeight, _mapWidth];
+        GenerateWallsAndLakes(generatedMap);
+        SurroundLakesWithFloor(generatedMap);
         for (int i = 1; i < _mapWidth; i += 6)
         {
-            GenerateRandomVerticalPath(map, i, 2);
+            GenerateRandomVerticalPath(generatedMap, i, _canyonsWidth);
         }
         for (int i = 0; i < _mapHeight; i += 10)
         {
-            GenerateRandomHorizontalPath(map, i, 2);
+            GenerateRandomHorizontalPath(generatedMap, i, _canyonsWidth);
         }
-
+        for (int x = 0; x < _mapHeight; x++)
+        {
+            for (int y = 0; y < _mapWidth; y++)
+            {
+                map[x + startPartLength + mapBorderWidth, y + mapBorderWidth] = generatedMap[x, y];
+            }
+        }
         return map;
     }
 
@@ -42,6 +64,10 @@ public class MapGenerator : MonoBehaviour
                 if (binaryMap[i, j])
                 {
                     map[i, j] = TileType.Mountain;
+                }
+                else
+                {
+                    map[i, j] = TileType.Acid;
                 }
             }
         }

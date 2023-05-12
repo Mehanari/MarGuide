@@ -1,66 +1,105 @@
 using System.Collections.Generic;
-using System.Linq;
-using TMPro.EditorUtilities;
 using UnityEngine;
 
 public class Game : MonoBehaviour
 {
     [SerializeField] private GameBoard _board;
     [SerializeField] private Vector2Int _boardSize;
+    [SerializeField] private Vector2Int _unitSpawnPoint;
+    [SerializeField] private int _startPartLength;
+    [SerializeField] private int _endPartLength;
+    [SerializeField] private int _mapBorderWidth;
     [SerializeField] private MapGenerator _mapGenerator;
+    [SerializeField] private TileViewFactory _viewFactory;
     [SerializeField] private int _oxygenChunkSize;
     [SerializeField] private Camera _camera;
+    [SerializeField] private Unit _unitPrefab;
+
+
+    [SerializeField] private Color _validPathColor;
+    [SerializeField] private Color _violatedPathColor;
+    [SerializeField] private Color _busyPathColor;
 
     private GameTile _lastTileOnPath;
     private bool _selectingNewPath;
     private List<GameTile> _currentPath = new List<GameTile>();
+    private List<GameTile> _busyPath;
+    private bool _currentPathIsViolated;
+    private Unit _unit;
+
+    private List<List<GameTile>> _createdPathes = new List<List<GameTile>>();
 
     private Ray TouchRay => _camera.ScreenPointToRay(Input.mousePosition);
 
     private void Start()
     {
-        _board.InitializeBoard(_boardSize, _mapGenerator, _oxygenChunkSize);
-        _lastTileOnPath = _board.GetTile(0, 0);
+        _board.InitializeBoard(_boardSize, _startPartLength, _endPartLength, _mapBorderWidth, _mapGenerator, _oxygenChunkSize, _viewFactory);
+        _lastTileOnPath = _board.GetTile(_unitSpawnPoint.x, _unitSpawnPoint.y);
+        _unit = Instantiate(_unitPrefab);
+        _unit.SpawnOn(_lastTileOnPath);
+        _unit.OnPathComplete.AddListener(OnUnitCompletedPath);
     }
 
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            var tile = _board.GetTile(TouchRay);
-            if (tile != null)
-            {
-                if (tile == _lastTileOnPath)
-                {
-                    _selectingNewPath = true;
-                }
-            }
+            StartPathSelection();
         }
         if (Input.GetMouseButtonUp(0))
         {
             EndPathSelection();
-            _selectingNewPath = false;
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            DeleteLastPath();
         }
 
         if (_selectingNewPath)
         {
-            var tile = _board.GetTile(TouchRay);
-            if (tile != null)
+            GrowCurrentPath();
+        }
+    }
+
+    private void OnUnitCompletedPath()
+    {
+        for (int i = 0; i < _busyPath.Count - 1; i++)
+        {
+            _busyPath[i].SetDefaultColor();
+        }
+        _busyPath = null;
+        if (_createdPathes.Count > 0)
+        {
+            var lastPath = _createdPathes[0];
+            SetPathToUnit(lastPath);
+        }
+        ValidateCreatedPathColors();
+    }
+
+    private void StartPathSelection()
+    {
+        var tile = _board.GetTile(TouchRay);
+        if (tile != null)
+        {
+            if (tile == _lastTileOnPath)
             {
-                if (!_currentPath.Contains(tile))
-                {
-                    _currentPath.Add(tile);
-                }
-                tile.SetColor(Color.green);
+                _selectingNewPath = true;
             }
         }
     }
 
     private void EndPathSelection()
     {
+        _selectingNewPath = false;
         if (PathIsValid())
         {
             _lastTileOnPath = _currentPath[_currentPath.Count - 1];
+            _createdPathes.Add(_currentPath);
+            if (_busyPath == null)
+            {
+                SetPathToUnit(_currentPath);
+            }
+            _currentPath = new List<GameTile>();
         }
         else
         {
@@ -68,15 +107,21 @@ public class Game : MonoBehaviour
             {
                 tile.SetDefaultColor();
             }
-            _lastTileOnPath.SetColor(Color.green);
+            _lastTileOnPath.SetColor(_validPathColor);
+            _currentPath.Clear();
+            ValidateCreatedPathColors();
         }
-        _currentPath.Clear();
     }
 
     private bool PathIsValid()
     {
         if (_currentPath.Count <= 1)
         {
+            return false;
+        }
+        if (_currentPathIsViolated)
+        {
+            _currentPathIsViolated = false;
             return false;
         }
 
@@ -89,12 +134,118 @@ public class Game : MonoBehaviour
             {
                 return false;
             }
-            if (currentTile.Type == TileType.Acid)
+            if (currentTile.Type == TileType.Acid || currentTile.Type == TileType.Border)
             {
                 return false;
             }
             previousTileOnPath = currentTile;
         }
         return true;
+    }
+
+
+
+    private void DeleteLastPath()
+    {
+        if (_createdPathes.Count == 0 || _selectingNewPath)
+        {
+            return;
+        }
+        var lastPath = _createdPathes[_createdPathes.Count - 1];
+        for (int i = 0; i < lastPath.Count; i++)
+        {
+            lastPath[i].SetDefaultColor();
+        }
+        _lastTileOnPath = lastPath[0];
+        _lastTileOnPath.SetColor(_validPathColor);
+        _createdPathes.Remove(lastPath);
+        ValidateCreatedPathColors();
+    }
+
+    private void GrowCurrentPath()
+    {
+        var tile = _board.GetTile(TouchRay);
+        if (tile != null)
+        {
+            if (TileTooFarFromEndOfPath(tile) || tile.Type == TileType.Acid || tile.Type == TileType.Border)
+            {
+                ViolateCurrentPath();
+            }
+            if (!_currentPath.Contains(tile))
+            {
+                _currentPath.Add(tile);
+            }
+            if (_currentPathIsViolated)
+            {
+                tile.SetColor(_violatedPathColor);
+            }
+            else
+            {
+                tile.SetColor(_validPathColor);
+            }
+        }
+    }
+
+    private bool TileTooFarFromEndOfPath(GameTile tile)
+    {
+        if (_currentPath.Count == 0)
+        {
+            return false;
+        }
+        var lastTileOnPath = _currentPath[_currentPath.Count - 1];
+        var distance = Vector3.Distance(tile.transform.position, lastTileOnPath.transform.position);
+        return distance > 1;
+
+    }
+
+    private void ViolateCurrentPath()
+    {
+        _currentPathIsViolated = true;
+        for (int i = 0; i < _currentPath.Count; i++)
+        {
+            _currentPath[i].SetColor(_violatedPathColor);
+        }
+    }
+
+    private void SetPathToUnit(List<GameTile> path)
+    {
+        _busyPath = path;
+        for (int i = 0; i < _busyPath.Count; i++)
+        {
+            _busyPath[i].SetColor(_busyPathColor);
+        }
+        _unit.SetPath(_busyPath);
+        _createdPathes.Remove(_busyPath);
+    }
+
+    private void ValidateCreatedPathColors()
+    {
+        for (int i = 0; i < _createdPathes.Count; i++)
+        {
+            var path = _createdPathes[i];
+            for (int j = 0; j < path.Count; j++)
+            {
+                path[j].SetColor(_validPathColor);
+            }
+        }
+        for (int i = 0; i < _currentPath.Count; i++)
+        {
+            if (_currentPathIsViolated)
+            {
+                _currentPath[i].SetColor(_violatedPathColor);
+            }
+            else
+            {
+                _currentPath[i].SetColor(_validPathColor);
+            }
+        }
+        if (_busyPath == null)
+        {
+            return;
+        }
+        for (int i = 0; i < _busyPath.Count; i++)
+        {
+            _busyPath[i].SetColor(_busyPathColor);
+        }
     }
 }

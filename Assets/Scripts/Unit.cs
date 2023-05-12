@@ -5,16 +5,25 @@ using UnityEngine.Events;
 public class Unit : MonoBehaviour
 {
     [SerializeField] private float _speed;
+    [SerializeField] private float _rotationSpeed;
     [SerializeField] private float _destinationTreashold;
+    [SerializeField] private Animator _animator;
+    [SerializeField] private string _walkAnimatorTag;
+    [SerializeField] private string _deathTriggerTag;
+
+    private Vector3 _rotationFrom;
+    private Vector3 _rotationTo;
+    private float _rotationProgress;
 
     private GameTile _tileTo;
     private bool _isMoving;
 
     public bool IsMoving => _isMoving;
 
-    private Queue<GameTile> _route = new Queue<GameTile>();
+    private Queue<GameTile> _path = new Queue<GameTile>();
 
-    public UnityEvent OnRouteComplete;
+    public UnityEvent OnPathComplete;
+    public TileEvent OnNewTileSet;
 
     public void SpawnOn(GameTile tile)
     {
@@ -24,16 +33,11 @@ public class Unit : MonoBehaviour
         transform.localPosition = position;
     }
 
-    public void SetDestination(GameTile destination)
-    {
-        _tileTo = destination;
-    }
-
-    public void SetRoute(List<GameTile> route)
+    public void SetPath(List<GameTile> route)
     {
         for (int i = 0; i < route.Count; i++)
         {
-            _route.Enqueue(route[i]);
+            _path.Enqueue(route[i]);
         }
     }
 
@@ -41,14 +45,16 @@ public class Unit : MonoBehaviour
     {
         if (_tileTo == null)
         {
-            if (_route.Count == 0)
+            if (_path.Count == 0)
             {
                 _isMoving = false;
+                _animator.SetBool(_walkAnimatorTag, false);
                 return;
             }
             else
             {
-                _tileTo = _route.Dequeue();
+                _animator.SetBool(_walkAnimatorTag, true);
+                _tileTo = _path.Dequeue();
             }
         }
         else
@@ -56,15 +62,31 @@ public class Unit : MonoBehaviour
             _isMoving = true;
             Vector3 moveDir = (_tileTo.transform.position - transform.position).normalized;
             transform.position += moveDir * _speed * Time.deltaTime;
+            transform.LookAt(_tileTo.transform);
+            if (_rotationProgress < 1)
+            {
+                _rotationProgress += _rotationSpeed * Time.deltaTime;
+                transform.eulerAngles = Vector3.LerpUnclamped(_rotationFrom, _rotationTo, _rotationProgress);
+            }
             if (ReachedTile(_tileTo))
             {
-                if (_route.Count > 0)
+                if (_path.Count > 0)
                 {
-                    _tileTo = _route.Dequeue();
+                    _tileTo = _path.Dequeue();
+                    OnNewTileSet?.Invoke(_tileTo);
+                    _rotationFrom = transform.eulerAngles;
+                    transform.LookAt(_tileTo.transform);
+                    _rotationTo = transform.eulerAngles;
+                    if (_rotationTo.y > 180)
+                    {
+                        _rotationTo.y = -360 + _rotationTo.y;
+                    }
+                    transform.eulerAngles = _rotationFrom;
+                    _rotationProgress = 0f;
                 }
                 else
                 {
-                    OnRouteComplete?.Invoke();
+                    OnPathComplete?.Invoke();
                     _tileTo = null;
                 }
             }
@@ -79,4 +101,13 @@ public class Unit : MonoBehaviour
                 transform.position.z < _tileTo.transform.position.z + _destinationTreashold;
         return reachedX && reachedZ;
     }
+
+    public void Die()
+    {
+        _tileTo = null;
+        _isMoving = false;
+        _animator.SetTrigger(_deathTriggerTag);
+    }
+
+    public class TileEvent : UnityEvent<GameTile> { }
 }

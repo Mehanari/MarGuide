@@ -6,7 +6,7 @@ public class GameTileView : MonoBehaviour
     private Color[] _defaultColors;
     private Material[] _materials;
 
-    private void Start()
+    private void OnEnable()
     {
         _materials = new Material[_renderers.Length];
         _defaultColors= new Color[_renderers.Length];

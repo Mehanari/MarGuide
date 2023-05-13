@@ -1,8 +1,11 @@
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Game : MonoBehaviour
 {
+
     [SerializeField] private GameBoard _board;
     [SerializeField] private Vector2Int _boardSize;
     [SerializeField] private Vector2Int _unitSpawnPoint;
@@ -14,7 +17,7 @@ public class Game : MonoBehaviour
     [SerializeField] private int _oxygenChunkSize;
     [SerializeField] private Camera _camera;
     [SerializeField] private Unit _unitPrefab;
-
+    [SerializeField] private int _oxygen;
 
     [SerializeField] private Color _validPathColor;
     [SerializeField] private Color _violatedPathColor;
@@ -38,6 +41,41 @@ public class Game : MonoBehaviour
         _unit = Instantiate(_unitPrefab);
         _unit.SpawnOn(_lastTileOnPath);
         _unit.OnPathComplete.AddListener(OnUnitCompletedPath);
+        _unit.OnNewTileSet.AddListener(UnitWentOnNewTile);
+    }
+
+    private void UnitWentOnNewTile(GameTile tile)
+    {
+        if (tile.Type == TileType.Ground)
+        {
+            _oxygen -= 1;
+        }
+        if (tile.Type == TileType.Mountain)
+        {
+            _oxygen -= 2;
+            tile.Type = TileType.Ground;
+            tile.SetView(_viewFactory.GetView(TileType.Ground), 0);
+            tile.SetColor(_busyPathColor);
+        }
+        if (_oxygen <= 0)
+        {
+            _unit.Die();
+        }
+    }
+
+    private void OnUnitCompletedPath()
+    {
+        for (int i = 0; i < _busyPath.Count - 1; i++)
+        {
+            _busyPath[i].SetDefaultColor();
+        }
+        _busyPath = null;
+        if (_createdPathes.Count > 0)
+        {
+            var lastPath = _createdPathes[0];
+            SetPathToUnit(lastPath);
+        }
+        ValidateCreatedPathColors();
     }
 
     private void Update()
@@ -59,21 +97,6 @@ public class Game : MonoBehaviour
         {
             GrowCurrentPath();
         }
-    }
-
-    private void OnUnitCompletedPath()
-    {
-        for (int i = 0; i < _busyPath.Count - 1; i++)
-        {
-            _busyPath[i].SetDefaultColor();
-        }
-        _busyPath = null;
-        if (_createdPathes.Count > 0)
-        {
-            var lastPath = _createdPathes[0];
-            SetPathToUnit(lastPath);
-        }
-        ValidateCreatedPathColors();
     }
 
     private void StartPathSelection()

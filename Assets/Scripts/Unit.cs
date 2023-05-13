@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -18,13 +17,15 @@ public class Unit : MonoBehaviour
 
     private GameTile _tileTo;
     private bool _isMoving;
+    private bool _isDead;
 
     public bool IsMoving => _isMoving;
 
     private Queue<GameTile> _path = new Queue<GameTile>();
 
     public UnityEvent OnPathComplete;
-    public TileEvent OnNewTileSet;
+    public TileEvent OnNewTileSet = new TileEvent();
+    public OxygenEvent OnGetOxygen;
 
     public void SpawnOn(GameTile tile)
     {
@@ -44,6 +45,10 @@ public class Unit : MonoBehaviour
 
     private void Update()
     {
+        if (_isDead)
+        {
+            return;
+        }
         if (_tileTo == null)
         {
             if (_path.Count == 0)
@@ -114,10 +119,12 @@ public class Unit : MonoBehaviour
 
     public void Die()
     {
-        _tileTo = null;
+        _isDead = true;
         _isMoving = false;
         _animator.SetTrigger(_deathTriggerTag);
     }
 
     public class TileEvent : UnityEvent<GameTile> { }
+
+    public class OxygenEvent : UnityEvent<int> { }
 }

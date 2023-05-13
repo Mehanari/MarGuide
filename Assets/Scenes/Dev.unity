@@ -357,6 +357,7 @@ MonoBehaviour:
   _oxygenChunkSize: 5
   _camera: {fileID: 1487805976}
   _unitPrefab: {fileID: 350048279210273902, guid: c31cf7595a1b3d84eb2bc82fbd4dfba1, type: 3}
+  _oxygen: 20
   _validPathColor: {r: 0, g: 1, b: 0.0033602715, a: 0}
   _violatedPathColor: {r: 1, g: 0, b: 0, a: 0}
   _busyPathColor: {r: 1, g: 0.4529273, b: 0, a: 0}

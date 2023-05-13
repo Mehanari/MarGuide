@@ -10250,6 +10250,7 @@ GameObject:
   - component: {fileID: 1671612424}
   - component: {fileID: 1671612426}
   - component: {fileID: 1671612425}
+  - component: {fileID: 1671612427}
   m_Layer: 0
   m_Name: Deadly
   m_TagString: Untagged
@@ -15053,6 +15054,19 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!65 &1671612427
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1671612423}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 12.712451, y: 10.453022, z: 73.9744}
+  m_Center: {x: 1.7604964, y: -0.002313614, z: 33.70477}
 --- !u!1 &1706662140
 GameObject:
   m_ObjectHideFlags: 0

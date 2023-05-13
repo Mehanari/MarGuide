@@ -1,7 +1,10 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameTile : MonoBehaviour
 {
+    [SerializeField] private UnityEvent _onViewChanged;
+
     private GameTileView _view;
 
     public Vector2Int Coordinates { get; set; }
@@ -33,6 +36,7 @@ public class GameTile : MonoBehaviour
         if (_view != null)
         {
             Destroy(_view.gameObject);
+            _onViewChanged?.Invoke();
         }
         _view = Instantiate(view);
         _view.transform.SetParent(transform, false);

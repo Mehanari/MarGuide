@@ -35,11 +35,11 @@ public class MapGenerator : MonoBehaviour
         TileType[,] generatedMap = new TileType[_mapHeight, _mapWidth];
         GenerateWallsAndLakes(generatedMap);
         SurroundLakesWithFloor(generatedMap);
-        for (int i = 1; i < _mapWidth; i += 6)
+        for (int i = 1; i < _mapWidth; i += 10)
         {
             GenerateRandomVerticalPath(generatedMap, i, _canyonsWidth);
         }
-        for (int i = 0; i < _mapHeight; i += 10)
+        for (int i = 0; i < _mapHeight; i += 6)
         {
             GenerateRandomHorizontalPath(generatedMap, i, _canyonsWidth);
         }

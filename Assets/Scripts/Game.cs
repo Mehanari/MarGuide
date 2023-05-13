@@ -18,11 +18,13 @@ public class Game : MonoBehaviour
     [SerializeField] private Camera _camera;
     [SerializeField] private Unit _unitPrefab;
     [SerializeField] private int _oxygen;
+    [SerializeField] private float _cameraSpeed;
 
     [SerializeField] private Color _validPathColor;
     [SerializeField] private Color _violatedPathColor;
     [SerializeField] private Color _busyPathColor;
 
+    private int _maxZReached;
     private GameTile _lastTileOnPath;
     private bool _selectingNewPath;
     private List<GameTile> _currentPath = new List<GameTile>();
@@ -43,6 +45,7 @@ public class Game : MonoBehaviour
         _unit.OnPathComplete.AddListener(OnUnitCompletedPath);
         _unit.OnNewTileSet.AddListener(UnitWentOnNewTile);
         _unit.OnGetOxygen.AddListener(UnitCollectedOxygen);
+        _maxZReached = (int)_lastTileOnPath.transform.position.z;
     }
 
     private void UnitCollectedOxygen(int amount)
@@ -66,6 +69,12 @@ public class Game : MonoBehaviour
         if (_oxygen <= 0)
         {
             _unit.Die();
+        }
+
+        var tileZ = (int)tile.transform.position.z;
+        if (tileZ > _maxZReached)
+        {
+            _maxZReached = tileZ;
         }
     }
 
@@ -103,6 +112,8 @@ public class Game : MonoBehaviour
         {
             GrowCurrentPath();
         }
+
+        ProcessCameraMovement();
     }
 
     private void StartPathSelection()
@@ -275,6 +286,16 @@ public class Game : MonoBehaviour
         for (int i = 0; i < _busyPath.Count; i++)
         {
             _busyPath[i].SetColor(_busyPathColor);
+        }
+    }
+
+    private void ProcessCameraMovement()
+    {
+        if ((int)_camera.transform.position.z < _maxZReached)
+        {
+            var cameraPosition = _camera.transform.position;
+            cameraPosition.z += _cameraSpeed * Time.deltaTime;
+            _camera.transform.position = cameraPosition;
         }
     }
 }

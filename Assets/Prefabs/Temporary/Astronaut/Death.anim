@@ -28581,7 +28581,7 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.4
-    functionName: PlaySound
+    functionName: PlayFallSound
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

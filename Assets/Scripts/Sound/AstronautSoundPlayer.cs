@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class AstronautSoundPlayer : MonoBehaviour
 {
-    [SerializeField] private Footsteps _walkingSounds;
-    [SerializeField] private Footsteps _deathSounds;
+    [SerializeField] private RandomSoundPlayer _walkingSounds;
+    [SerializeField] private RandomSoundPlayer _deathSounds;
+    [SerializeField] private RandomSoundPlayer _fallSounds;
 
     public void PlayWalkSound()
     {
@@ -13,5 +14,10 @@ public class AstronautSoundPlayer : MonoBehaviour
     public void PlayDeathSound()
     {
         _deathSounds.PlaySound();
+    }
+
+    public void PlayFallSound()
+    {
+        _fallSounds.PlaySound();
     }
 }

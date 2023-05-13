@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Footsteps : MonoBehaviour
+public class RandomSoundPlayer : MonoBehaviour
 {
     [SerializeField] private List<AudioClip> _clips;
     [SerializeField] private AudioSource _source;

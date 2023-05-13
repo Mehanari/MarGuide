@@ -1,11 +1,10 @@
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class Game : MonoBehaviour
 {
-
+    [Header("Map options")]
     [SerializeField] private GameBoard _board;
     [SerializeField] private Vector2Int _boardSize;
     [SerializeField] private Vector2Int _unitSpawnPoint;
@@ -15,14 +14,20 @@ public class Game : MonoBehaviour
     [SerializeField] private MapGenerator _mapGenerator;
     [SerializeField] private TileViewFactory _viewFactory;
     [SerializeField] private int _oxygenChunkSize;
+
+    [Header("Player options")]
     [SerializeField] private Camera _camera;
     [SerializeField] private Unit _unitPrefab;
     [SerializeField] private int _oxygen;
     [SerializeField] private float _cameraSpeed;
 
+    [Header("Tile selection options")]
     [SerializeField] private Color _validPathColor;
     [SerializeField] private Color _violatedPathColor;
     [SerializeField] private Color _busyPathColor;
+    [SerializeField] private UnityEvent _onTileSelected;
+    [SerializeField] private UnityEvent _onPathApproved;
+    [SerializeField] private UnityEvent _onPathDenied;
 
     private int _maxZReached;
     private GameTile _lastTileOnPath;
@@ -140,6 +145,7 @@ public class Game : MonoBehaviour
                 SetPathToUnit(_currentPath);
             }
             _currentPath = new List<GameTile>();
+            _onPathApproved?.Invoke();
         }
         else
         {
@@ -149,6 +155,7 @@ public class Game : MonoBehaviour
             }
             _lastTileOnPath.SetColor(_validPathColor);
             _currentPath.Clear();
+            _onPathDenied?.Invoke();
             ValidateCreatedPathColors();
         }
     }
@@ -214,6 +221,7 @@ public class Game : MonoBehaviour
             if (!_currentPath.Contains(tile))
             {
                 _currentPath.Add(tile);
+                _onTileSelected?.Invoke();
             }
             if (_currentPathIsViolated)
             {

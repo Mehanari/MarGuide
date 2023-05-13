@@ -42,6 +42,12 @@ public class Game : MonoBehaviour
         _unit.SpawnOn(_lastTileOnPath);
         _unit.OnPathComplete.AddListener(OnUnitCompletedPath);
         _unit.OnNewTileSet.AddListener(UnitWentOnNewTile);
+        _unit.OnGetOxygen.AddListener(UnitCollectedOxygen);
+    }
+
+    private void UnitCollectedOxygen(int amount)
+    {
+        _oxygen += amount;
     }
 
     private void UnitWentOnNewTile(GameTile tile)

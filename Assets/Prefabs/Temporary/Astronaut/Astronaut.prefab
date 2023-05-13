@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6024658740753435639}
   - component: {fileID: 350048279210273902}
+  - component: {fileID: 2334244289379788761}
   m_Layer: 0
   m_Name: Astronaut
   m_TagString: Untagged
@@ -54,6 +55,19 @@ MonoBehaviour:
   OnPathComplete:
     m_PersistentCalls:
       m_Calls: []
+--- !u!65 &2334244289379788761
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6024658740753435632}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.7073277, y: 0.9498831, z: 0.5910026}
+  m_Center: {x: -0.009998739, y: 0.5724016, z: -0.04545957}
 --- !u!1001 &7673801059763832894
 PrefabInstance:
   m_ObjectHideFlags: 0

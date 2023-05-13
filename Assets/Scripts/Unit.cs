@@ -25,7 +25,7 @@ public class Unit : MonoBehaviour
 
     public UnityEvent OnPathComplete;
     public TileEvent OnNewTileSet = new TileEvent();
-    public OxygenEvent OnGetOxygen;
+    public OxygenEvent OnGetOxygen = new OxygenEvent();
 
     public void SpawnOn(GameTile tile)
     {
@@ -122,6 +122,11 @@ public class Unit : MonoBehaviour
         _isDead = true;
         _isMoving = false;
         _animator.SetTrigger(_deathTriggerTag);
+    }
+
+    public void AddOxygen(int amount)
+    {
+        OnGetOxygen?.Invoke(amount);
     }
 
     public class TileEvent : UnityEvent<GameTile> { }

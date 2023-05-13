@@ -26,6 +26,7 @@ public class Game : MonoBehaviour
     [SerializeField] private Color _violatedPathColor;
     [SerializeField] private Color _busyPathColor;
     [SerializeField] private UnityEvent _onTileSelected;
+    [SerializeField] private UnityEvent _onPathSelected;
     [SerializeField] private UnityEvent _onPathApproved;
     [SerializeField] private UnityEvent _onPathDenied;
 
@@ -136,6 +137,7 @@ public class Game : MonoBehaviour
     private void EndPathSelection()
     {
         _selectingNewPath = false;
+        _onPathSelected?.Invoke();
         if (PathIsValid())
         {
             _lastTileOnPath = _currentPath[_currentPath.Count - 1];

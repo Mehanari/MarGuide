@@ -4,6 +4,7 @@ public class IncreasingPitchSound : MonoBehaviour
 {
     [SerializeField] private AudioSource _source;
     [SerializeField] private float _pitchStep;
+    [SerializeField] private float _maxPitch;
 
     private float _defaultPitch;
 
@@ -15,7 +16,10 @@ public class IncreasingPitchSound : MonoBehaviour
     public void PlaySound()
     {
         _source.Play();
-        _source.pitch += _pitchStep;
+        if (_source.pitch < _maxPitch)
+        {
+            _source.pitch += _pitchStep;
+        }
     }
 
     public void ResetPitch()

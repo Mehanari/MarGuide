@@ -9832,6 +9832,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _source: {fileID: 593108808}
   _pitchStep: 0.1
+  _maxPitch: 2
 --- !u!82 &593108808
 AudioSource:
   m_ObjectHideFlags: 0
@@ -15344,6 +15345,21 @@ MonoBehaviour:
       - m_Target: {fileID: 593108807}
         m_TargetAssemblyTypeName: IncreasingPitchSound, Assembly-CSharp
         m_MethodName: PlaySound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _onPathSelected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 593108807}
+        m_TargetAssemblyTypeName: IncreasingPitchSound, Assembly-CSharp
+        m_MethodName: ResetPitch
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

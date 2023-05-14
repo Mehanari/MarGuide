@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -42,6 +43,9 @@ public class Game : MonoBehaviour
     [SerializeField] private Vector3 _baseCoordinates;
     [SerializeField] private GameObject _baseObject;
 
+    [Header("UI options")]
+    [SerializeField] private TextMeshProUGUI _oxygenCountTextMesh;
+
     private int _maxZReached;
     private GameTile _lastTileOnPath;
     private bool _selectingNewPath;
@@ -62,11 +66,12 @@ public class Game : MonoBehaviour
         _unit.SpawnOn(_lastTileOnPath);
         _unit.OnPathComplete.AddListener(OnUnitCompletedPath);
         _unit.OnNewTileSet.AddListener(UnitWentOnNewTile);
-        _unit.OnGetOxygen.AddListener(UnitCollectedOxygen);
+        _unit.OnGetOxygen.AddListener(UpdateOxygen);
         _maxZReached = (int)_lastTileOnPath.transform.position.z;
         _sandstorm.SetSpeed(_sandStormSpeed);
         _unit.OnDie.AddListener(Lose);
         _baseObject.transform.position = _baseCoordinates;
+        _oxygenCountTextMesh.text = _oxygen.ToString();
     }
 
     public void Lose()
@@ -81,33 +86,35 @@ public class Game : MonoBehaviour
         _onWin?.Invoke();
     }
 
-    private void UnitCollectedOxygen(int amount)
-    {
-        _oxygen += amount;
-    }
-
     private void UnitWentOnNewTile(GameTile tile)
     {
         if (tile.Type == TileType.Ground)
         {
-            _oxygen -= 1;
+            UpdateOxygen(-1);
         }
         if (tile.Type == TileType.Mountain)
         {
-            _oxygen -= 2;
+            UpdateOxygen(-2);
             tile.Type = TileType.Ground;
             tile.SetView(_viewFactory.GetView(TileType.Ground), 0);
             tile.SetColor(_busyPathColor);
         }
-        if (_oxygen <= 0)
-        {
-            _unit.Die();
-        }
+
 
         var tileZ = (int)tile.transform.position.z;
         if (tileZ > _maxZReached)
         {
             _maxZReached = tileZ;
+        }
+    }
+
+    private void UpdateOxygen(int amount)
+    {
+        _oxygen += amount;
+        _oxygenCountTextMesh.text = _oxygen.ToString();
+        if (_oxygen <= 0)
+        {
+            _unit.Die();
         }
     }
 

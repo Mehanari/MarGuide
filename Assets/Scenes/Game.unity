@@ -19028,7 +19028,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _difficultyConfig: {fileID: 11400000, guid: 7e38ef2f07e5a9544970705bc0ecb4a4, type: 2}
-  _startDifficulty: 9
+  _startDifficulty: 10
   _board: {fileID: 2038471160}
   _unitSpawnPoint: {x: 7, y: 23}
   _viewFactory: {fileID: 2030286193}

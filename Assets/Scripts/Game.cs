@@ -30,6 +30,18 @@ public class Game : MonoBehaviour
     [SerializeField] private UnityEvent _onPathApproved;
     [SerializeField] private UnityEvent _onPathDenied;
 
+    [Header("Sandstorm options")]
+    [SerializeField] private Vector3 _sandStormSpeed;
+    [SerializeField] private Sandstorm _sandstorm;
+
+    [Header("Game flow options")]
+    [SerializeField] private UnityEvent _onWin;
+    [SerializeField] private UnityEvent _onLose;
+
+    [Header("Base options")]
+    [SerializeField] private Vector3 _baseCoordinates;
+    [SerializeField] private GameObject _baseObject;
+
     private int _maxZReached;
     private GameTile _lastTileOnPath;
     private bool _selectingNewPath;
@@ -52,6 +64,21 @@ public class Game : MonoBehaviour
         _unit.OnNewTileSet.AddListener(UnitWentOnNewTile);
         _unit.OnGetOxygen.AddListener(UnitCollectedOxygen);
         _maxZReached = (int)_lastTileOnPath.transform.position.z;
+        _sandstorm.SetSpeed(_sandStormSpeed);
+        _unit.OnDie.AddListener(Lose);
+        _baseObject.transform.position = _baseCoordinates;
+    }
+
+    public void Lose()
+    {
+        _sandstorm.SetSpeed(Vector3.zero);
+        _onLose?.Invoke();
+    }
+
+    public void Win()
+    {
+        _sandstorm.SetSpeed(Vector3.zero);
+        _onWin?.Invoke();
     }
 
     private void UnitCollectedOxygen(int amount)

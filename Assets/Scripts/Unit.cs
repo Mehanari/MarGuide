@@ -10,7 +10,6 @@ public class Unit : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private string _walkAnimatorTag;
     [SerializeField] private string _deathTriggerTag;
-    [SerializeField] private UnityEvent _onDie;
 
     private Vector3 _rotationFrom;
     private Vector3 _rotationTo;
@@ -25,6 +24,7 @@ public class Unit : MonoBehaviour
     private Queue<GameTile> _path = new Queue<GameTile>();
 
     public UnityEvent OnPathComplete;
+    public UnityEvent OnDie;
     public TileEvent OnNewTileSet = new TileEvent();
     public OxygenEvent OnGetOxygen = new OxygenEvent();
 
@@ -123,7 +123,7 @@ public class Unit : MonoBehaviour
         _isDead = true;
         _isMoving = false;
         _animator.SetTrigger(_deathTriggerTag);
-        _onDie?.Invoke();
+        OnDie?.Invoke();
     }
 
     public void AddOxygen(int amount)

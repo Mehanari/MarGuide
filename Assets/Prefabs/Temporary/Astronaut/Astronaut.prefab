@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3009382082321507043}
   m_Layer: 0
   m_Name: Astronaut
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53,10 +53,10 @@ MonoBehaviour:
   _animator: {fileID: 6350565406186335310}
   _walkAnimatorTag: Walk
   _deathTriggerTag: Die
-  _onDie:
+  OnPathComplete:
     m_PersistentCalls:
       m_Calls: []
-  OnPathComplete:
+  OnDie:
     m_PersistentCalls:
       m_Calls: []
 --- !u!65 &2334244289379788761
@@ -784,6 +784,40 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &166542580088505178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7403839420890117487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bf7e4f5bce154446b066f6de1e6626c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _clips:
+  - {fileID: 8300000, guid: d700b99eaadac44419f7bf4b899c0324, type: 3}
+  - {fileID: 8300000, guid: 191b4efa3a97a8d4b8f071f5a5e4bd89, type: 3}
+  - {fileID: 8300000, guid: 9e271e7145414354383b67ada19cee00, type: 3}
+  - {fileID: 8300000, guid: 9e5cddebad6e44244aa31baac7c6eba0, type: 3}
+  - {fileID: 8300000, guid: fb1d15a550a7a1449aa9abaa9b0e375a, type: 3}
+  _source: {fileID: 2098198866388165973}
+--- !u!114 &3119464267742387070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7403839420890117487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46962905e8077db42b10a30de97128c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _walkingSounds: {fileID: 3477174684628217198}
+  _deathSounds: {fileID: 9066325397511271226}
+  _fallSounds: {fileID: 166542580088505178}
 --- !u!114 &3477174684628217198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -817,40 +851,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _clips:
   - {fileID: 8300000, guid: f980c4eaafdd31c4d9fb904caefe2097, type: 3}
-  _source: {fileID: 2098198866388165973}
---- !u!114 &3119464267742387070
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7403839420890117487}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46962905e8077db42b10a30de97128c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _walkingSounds: {fileID: 3477174684628217198}
-  _deathSounds: {fileID: 9066325397511271226}
-  _fallSounds: {fileID: 166542580088505178}
---- !u!114 &166542580088505178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7403839420890117487}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bf7e4f5bce154446b066f6de1e6626c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _clips:
-  - {fileID: 8300000, guid: d700b99eaadac44419f7bf4b899c0324, type: 3}
-  - {fileID: 8300000, guid: 191b4efa3a97a8d4b8f071f5a5e4bd89, type: 3}
-  - {fileID: 8300000, guid: 9e271e7145414354383b67ada19cee00, type: 3}
-  - {fileID: 8300000, guid: 9e5cddebad6e44244aa31baac7c6eba0, type: 3}
-  - {fileID: 8300000, guid: fb1d15a550a7a1449aa9abaa9b0e375a, type: 3}
   _source: {fileID: 2098198866388165973}
 --- !u!4 &7923072085910368213 stripped
 Transform:

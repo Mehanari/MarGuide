@@ -51,7 +51,7 @@ public class GameBoard : MonoBehaviour
     {
         int startX = 0;
         int startY = 0;
-        while (startX < _boardSize.x)
+        while (startX < _boardSize.x - chunkSize)
         {
             while (startY < _boardSize.y)
             {

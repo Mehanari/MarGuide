@@ -126,18 +126,66 @@ MonoBehaviour:
     SandstormSpawnPosition: {x: 0, y: 5.5, z: -8}
     SandstormSpeed: {x: 0, y: 0, z: 1}
   - GenerationParameters:
-      AcidLakesDensity: 45
+      AcidLakesDensity: 20
       AcidLakesGenerationIterationsCount: 4
       PathPartMaxLength: 3
       CanyonsWidth: 3
-      VerticalCanyonsPeriod: 10
+      VerticalCanyonsPeriod: 12
       HorizontalCanyonsPeriod: 8
       StartPartLength: 10
       EndPartLength: 10
       BorderWidth: 5
       GeneratedMapSize: {x: 175, y: 30}
+    OxygenChunkSize: 11
+    StartOxygen: 30
+    OxygenTankAmount: 12
+    SandstormSpawnPosition: {x: 0, y: 5.5, z: -8}
+    SandstormSpeed: {x: 0, y: 0, z: 1.28}
+  - GenerationParameters:
+      AcidLakesDensity: 20
+      AcidLakesGenerationIterationsCount: 1
+      PathPartMaxLength: 3
+      CanyonsWidth: 3
+      VerticalCanyonsPeriod: 10
+      HorizontalCanyonsPeriod: 6
+      StartPartLength: 10
+      EndPartLength: 10
+      BorderWidth: 5
+      GeneratedMapSize: {x: 200, y: 30}
     OxygenChunkSize: 10
     StartOxygen: 30
-    OxygenTankAmount: 14
+    OxygenTankAmount: 11
     SandstormSpawnPosition: {x: 0, y: 5.5, z: -8}
-    SandstormSpeed: {x: 0, y: 0, z: 1.25}
+    SandstormSpeed: {x: 0, y: 0, z: 1.3}
+  - GenerationParameters:
+      AcidLakesDensity: 40
+      AcidLakesGenerationIterationsCount: 2
+      PathPartMaxLength: 3
+      CanyonsWidth: 2
+      VerticalCanyonsPeriod: 10
+      HorizontalCanyonsPeriod: 6
+      StartPartLength: 10
+      EndPartLength: 10
+      BorderWidth: 5
+      GeneratedMapSize: {x: 200, y: 30}
+    OxygenChunkSize: 8
+    StartOxygen: 30
+    OxygenTankAmount: 11
+    SandstormSpawnPosition: {x: 0, y: 5.5, z: -8}
+    SandstormSpeed: {x: 0, y: 0, z: 1.32}
+  - GenerationParameters:
+      AcidLakesDensity: 40
+      AcidLakesGenerationIterationsCount: 2
+      PathPartMaxLength: 3
+      CanyonsWidth: 2
+      VerticalCanyonsPeriod: 10
+      HorizontalCanyonsPeriod: 6
+      StartPartLength: 10
+      EndPartLength: 10
+      BorderWidth: 5
+      GeneratedMapSize: {x: 200, y: 30}
+    OxygenChunkSize: 8
+    StartOxygen: 30
+    OxygenTankAmount: 11
+    SandstormSpawnPosition: {x: 0, y: 5.5, z: -4}
+    SandstormSpeed: {x: 0, y: 0, z: 1.35}

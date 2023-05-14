@@ -3,16 +3,17 @@ using UnityEngine.Events;
 
 public class Oxygen : MonoBehaviour
 {
-    [SerializeField] private int _amount;
     [SerializeField] private UnityEvent _onOxygenCollected;
+    private int _amount;
 
-    private void OnTriggerEnter(Collider other)
+    public void SetAmount(int amount)
     {
-        var unit = other.gameObject.GetComponent<Unit>();
-        if (unit != null)
-        {
-            unit.AddOxygen(_amount);
-            _onOxygenCollected?.Invoke();
-        }
+        _amount = amount;
+    }
+
+    public void CollectOxygen(Unit astronaut)
+    {
+        astronaut.AddOxygen(_amount);
+        _onOxygenCollected?.Invoke();
     }
 }

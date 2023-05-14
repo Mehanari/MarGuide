@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db9fd5155fc841b4d95df11191cddfd2, type: 3}
+  m_Name: Difficulty config
+  m_EditorClassIdentifier: 
+  _difficultyLevels:
+  - GenerationParameters:
+      AcidLakesDensity: 30
+      AcidLakesGenerationIterationsCount: 2
+      PathPartMaxLength: 3
+      CanyonsWidth: 3
+      VerticalCanyonsPeriod: 10
+      HorizontalCanyonsPeriod: 6
+      StartPartLength: 10
+      EndPartLength: 10
+      BorderWidth: 5
+      GeneratedMapSize: {x: 50, y: 30}
+    OxygenChunkSize: 8
+    StartOxygen: 30
+    OxygenTankAmount: 20
+    SandstormSpeed: {x: 0, y: 0, z: 0}
+  - GenerationParameters:
+      AcidLakesDensity: 45
+      AcidLakesGenerationIterationsCount: 2
+      PathPartMaxLength: 3
+      CanyonsWidth: 2
+      VerticalCanyonsPeriod: 10
+      HorizontalCanyonsPeriod: 6
+      StartPartLength: 10
+      EndPartLength: 10
+      BorderWidth: 5
+      GeneratedMapSize: {x: 150, y: 30}
+    OxygenChunkSize: 12
+    StartOxygen: 20
+    OxygenTankAmount: 12
+    SandstormSpeed: {x: 0, y: 0, z: 1}
+  - GenerationParameters:
+      AcidLakesDensity: 45
+      AcidLakesGenerationIterationsCount: 2
+      PathPartMaxLength: 3
+      CanyonsWidth: 2
+      VerticalCanyonsPeriod: 10
+      HorizontalCanyonsPeriod: 6
+      StartPartLength: 10
+      EndPartLength: 10
+      BorderWidth: 5
+      GeneratedMapSize: {x: 150, y: 30}
+    OxygenChunkSize: 12
+    StartOxygen: 20
+    OxygenTankAmount: 12
+    SandstormSpeed: {x: 0, y: 0, z: 1}

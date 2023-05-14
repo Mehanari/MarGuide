@@ -11020,6 +11020,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _onAstronautEnter:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1274169347
 GameObject:
   m_ObjectHideFlags: 0
@@ -18465,18 +18468,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bb4bde8b2ffbfe4c8c60e9d0515f632, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _difficultyConfig: {fileID: 11400000, guid: 7e38ef2f07e5a9544970705bc0ecb4a4, type: 2}
+  _chooseSelectedDifficulty: 1
+  _difficulty: 1
   _board: {fileID: 2038471160}
-  _boardSize: {x: 150, y: 30}
   _unitSpawnPoint: {x: 7, y: 23}
-  _startPartLength: 10
-  _endPartLength: 10
-  _mapBorderWidth: 5
-  _mapGenerator: {fileID: 2038471161}
   _viewFactory: {fileID: 2030286193}
-  _oxygenChunkSize: 10
   _camera: {fileID: 1487805976}
   _unitPrefab: {fileID: 350048279210273902, guid: c31cf7595a1b3d84eb2bc82fbd4dfba1, type: 3}
-  _oxygen: 20
   _cameraSpeed: 2
   _validPathColor: {r: 0, g: 1, b: 0.0033602715, a: 0}
   _violatedPathColor: {r: 1, g: 0, b: 0, a: 0}
@@ -18541,7 +18540,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _sandStormSpeed: {x: 0, y: 0, z: 1}
   _sandstorm: {fileID: 86309027}
   _onWin:
     m_PersistentCalls:
@@ -18573,7 +18571,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  _baseCoordinates: {x: 0, y: 0, z: 0}
   _baseObject: {fileID: 1213609770}
   _oxygenCountTextMesh: {fileID: 289643717}
 --- !u!114 &2030286193
@@ -18616,7 +18613,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2038471159}
   - component: {fileID: 2038471160}
-  - component: {fileID: 2038471161}
   m_Layer: 0
   m_Name: GameBoard
   m_TagString: Untagged
@@ -18652,28 +18648,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tilePrefab: {fileID: 5920347171519509192, guid: 79940e9c1c786b6499e1ffbdb0f678d2, type: 3}
-  _oxygenTankPrefab: {fileID: 2518319262506996495, guid: eec0faabea1bf0843942f3e8373b4ec7, type: 3}
+  _oxygenTankPrefab: {fileID: 3673307982689035994, guid: eec0faabea1bf0843942f3e8373b4ec7, type: 3}
   _tilesMask:
     serializedVersion: 2
     m_Bits: 64
---- !u!114 &2038471161
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2038471158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf4bd8b98395e7a49b14d7633f8d9456, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _acidLakesDensity: 45
-  _acidLakesGenerationIterationsCount: 2
-  _pathPartMaxLength: 3
-  _canyonsWidth: 2
-  _verticalCanyonsPeriod: 10
-  _horizontalCanyonsPeriod: 6
 --- !u!1 &2054404011
 GameObject:
   m_ObjectHideFlags: 0

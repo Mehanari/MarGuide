@@ -1,35 +1,34 @@
 using UnityEngine;
 
-public class MapGenerator : MonoBehaviour
+public class MapGenerator
 {
-    [SerializeField] private int _acidLakesDensity;
-    [SerializeField] private int _acidLakesGenerationIterationsCount = 2;
-    [SerializeField] private int _pathPartMaxLength = 3;
-    [SerializeField] private int _canyonsWidth = 2;
-    [SerializeField] private int _verticalCanyonsPeriod = 10;
-    [SerializeField] private int _horizontalCanyonsPeriod = 6;
-
+    private int _acidLakesDensity;
+    private int _acidLakesGenerationIterationsCount = 2;
+    private int _pathPartMaxLength = 3;
+    private int _canyonsWidth = 2;
+    private int _verticalCanyonsPeriod = 10;
+    private int _horizontalCanyonsPeriod = 6;
+    private int _startPartLength;
+    private int _endPartLength;
+    private int _mapBorderWidth;
     private int _mapHeight;
     private int _mapWidth;
 
 
 
-    public TileType[,] GenerateMap(int mapHeight, int mapWidth, int startPartLength, int endPartLength, int mapBorderWidth)
+    public TileType[,] GenerateMap()
     {
-        _mapHeight = mapHeight;
-        _mapWidth = mapWidth;
-
-        TileType[,] map = new TileType[_mapHeight + startPartLength + endPartLength + mapBorderWidth*2, _mapWidth + mapBorderWidth*2];
-        for (int x = mapBorderWidth; x < mapBorderWidth + startPartLength; x++)
+        TileType[,] map = new TileType[_mapHeight + _startPartLength + _endPartLength + _mapBorderWidth*2, _mapWidth + _mapBorderWidth*2];
+        for (int x = _mapBorderWidth; x < _mapBorderWidth + _startPartLength; x++)
         {
-            for (int y = mapBorderWidth; y < map.GetLength(1) - mapBorderWidth; y++)
+            for (int y = _mapBorderWidth; y < map.GetLength(1) - _mapBorderWidth; y++)
             {
                 map[x, y] = TileType.Ground;
             }
         }
-        for (int x = map.GetLength(0) - mapBorderWidth - endPartLength; x < map.GetLength(0) - mapBorderWidth; x++)
+        for (int x = map.GetLength(0) - _mapBorderWidth - _endPartLength; x < map.GetLength(0) - _mapBorderWidth; x++)
         {
-            for (int y = mapBorderWidth; y < map.GetLength(1) - mapBorderWidth; y++)
+            for (int y = _mapBorderWidth; y < map.GetLength(1) - _mapBorderWidth; y++)
             {
                 map[x, y] = TileType.Ground;
             }
@@ -49,10 +48,25 @@ public class MapGenerator : MonoBehaviour
         {
             for (int y = 0; y < _mapWidth; y++)
             {
-                map[x + startPartLength + mapBorderWidth, y + mapBorderWidth] = generatedMap[x, y];
+                map[x + _startPartLength + _mapBorderWidth, y + _mapBorderWidth] = generatedMap[x, y];
             }
         }
         return map;
+    }
+
+    public MapGenerator(GenerationParameters parameters)
+    {
+        _acidLakesDensity = parameters.AcidLakesDensity;
+        _acidLakesGenerationIterationsCount = parameters.AcidLakesGenerationIterationsCount;
+        _pathPartMaxLength = parameters.PathPartMaxLength;
+        _canyonsWidth = parameters.CanyonsWidth;
+        _verticalCanyonsPeriod = parameters.VerticalCanyonsPeriod;
+        _horizontalCanyonsPeriod = parameters.HorizontalCanyonsPeriod;
+        _mapHeight = parameters.GeneratedMapSize.x;
+        _mapWidth = parameters.GeneratedMapSize.y;
+        _startPartLength = parameters.StartPartLength;
+        _endPartLength = parameters.EndPartLength;
+        _mapBorderWidth = parameters.BorderWidth;
     }
 
     private void GenerateWallsAndLakes(TileType[,] map)

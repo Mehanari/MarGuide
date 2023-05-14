@@ -5,22 +5,21 @@ using UnityEngine.Events;
 
 public class Game : MonoBehaviour
 {
+    [Header("Difficulty options")]
+    [SerializeField] private DifficultyConfig _difficultyConfig;
+    [SerializeField] private bool _chooseSelectedDifficulty;
+    [SerializeField] private int _difficulty;
+
     [Header("Map options")]
     [SerializeField] private GameBoard _board;
-    [SerializeField] private Vector2Int _boardSize;
     [SerializeField] private Vector2Int _unitSpawnPoint;
-    [SerializeField] private int _startPartLength;
-    [SerializeField] private int _endPartLength;
-    [SerializeField] private int _mapBorderWidth;
-    [SerializeField] private MapGenerator _mapGenerator;
     [SerializeField] private TileViewFactory _viewFactory;
-    [SerializeField] private int _oxygenChunkSize;
 
     [Header("Player options")]
     [SerializeField] private Camera _camera;
     [SerializeField] private Unit _unitPrefab;
-    [SerializeField] private int _oxygen;
     [SerializeField] private float _cameraSpeed;
+    private int _oxygen;
 
     [Header("Tile selection options")]
     [SerializeField] private Color _validPathColor;
@@ -32,7 +31,6 @@ public class Game : MonoBehaviour
     [SerializeField] private UnityEvent _onPathDenied;
 
     [Header("Sandstorm options")]
-    [SerializeField] private Vector3 _sandStormSpeed;
     [SerializeField] private Sandstorm _sandstorm;
 
     [Header("Game flow options")]
@@ -40,7 +38,6 @@ public class Game : MonoBehaviour
     [SerializeField] private UnityEvent _onLose;
 
     [Header("Base options")]
-    [SerializeField] private Vector3 _baseCoordinates;
     [SerializeField] private GameObject _baseObject;
 
     [Header("UI options")]
@@ -54,6 +51,7 @@ public class Game : MonoBehaviour
     private bool _currentPathIsViolated;
     private Unit _unit;
     private bool _stopGame;
+    private Vector2Int _generatedMapSize;
 
     private List<List<GameTile>> _createdPathes = new List<List<GameTile>>();
 
@@ -61,18 +59,47 @@ public class Game : MonoBehaviour
 
     private void Start()
     {
-        _board.InitializeBoard(_boardSize, _startPartLength, _endPartLength, _mapBorderWidth, _mapGenerator, _oxygenChunkSize, _viewFactory);
+        int difficulty;
+        if (_chooseSelectedDifficulty)
+        {
+            difficulty = _difficulty;
+        }
+        else
+        {
+            difficulty = GlobalDifficulty.Difficulty;
+        }
+
+        var diffConfig = _difficultyConfig.GetDifficulty(difficulty);
+        var mapGenerator = new MapGenerator(diffConfig.GenerationParameters);
+        _generatedMapSize = diffConfig.GenerationParameters.GeneratedMapSize;
+
+        _board.InitializeBoard(mapGenerator, diffConfig.OxygenChunkSize, diffConfig.OxygenTankAmount,  _viewFactory);
         _lastTileOnPath = _board.GetTile(_unitSpawnPoint.x, _unitSpawnPoint.y);
+        SetUpUnit();
+        PlaceBase(diffConfig.GenerationParameters);
+        _maxZReached = (int)_lastTileOnPath.transform.position.z;
+        _sandstorm.SetSpeed(diffConfig.SandstormSpeed);
+
+        UpdateOxygen(diffConfig.StartOxygen);
+    }
+
+    private void SetUpUnit()
+    {
         _unit = Instantiate(_unitPrefab);
         _unit.SpawnOn(_lastTileOnPath);
         _unit.OnPathComplete.AddListener(OnUnitCompletedPath);
         _unit.OnNewTileSet.AddListener(UnitWentOnNewTile);
         _unit.OnGetOxygen.AddListener(UpdateOxygen);
-        _maxZReached = (int)_lastTileOnPath.transform.position.z;
-        _sandstorm.SetSpeed(_sandStormSpeed);
         _unit.OnDie.AddListener(Lose);
-        _baseObject.transform.position = _baseCoordinates;
-        _oxygenCountTextMesh.text = _oxygen.ToString();
+    }
+
+    private void PlaceBase(GenerationParameters parameters)
+    {
+        int startPartLength = parameters.StartPartLength;
+        int endPartLength = parameters.EndPartLength;
+        int borderWidth = parameters.BorderWidth;
+        var baseTile = _board.GetTile(startPartLength + _generatedMapSize.x + endPartLength / 2, borderWidth + _generatedMapSize.y / 2);
+        _baseObject.transform.position = baseTile.transform.position;
     }
 
     public void Lose()
@@ -114,11 +141,13 @@ public class Game : MonoBehaviour
     private void UpdateOxygen(int amount)
     {
         _oxygen += amount;
-        _oxygenCountTextMesh.text = _oxygen.ToString();
         if (_oxygen <= 0)
         {
             _unit.Die();
+            _oxygen = 0;
         }
+        _oxygenCountTextMesh.text = _oxygen.ToString();
+
     }
 
     private void OnUnitCompletedPath()

@@ -6,6 +6,8 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private int _acidLakesGenerationIterationsCount = 2;
     [SerializeField] private int _pathPartMaxLength = 3;
     [SerializeField] private int _canyonsWidth = 2;
+    [SerializeField] private int _verticalCanyonsPeriod = 10;
+    [SerializeField] private int _horizontalCanyonsPeriod = 6;
 
     private int _mapHeight;
     private int _mapWidth;
@@ -35,11 +37,11 @@ public class MapGenerator : MonoBehaviour
         TileType[,] generatedMap = new TileType[_mapHeight, _mapWidth];
         GenerateWallsAndLakes(generatedMap);
         SurroundLakesWithFloor(generatedMap);
-        for (int i = 1; i < _mapWidth; i += 10)
+        for (int i = 1; i < _mapWidth; i += _verticalCanyonsPeriod)
         {
             GenerateRandomVerticalPath(generatedMap, i, _canyonsWidth);
         }
-        for (int i = 0; i < _mapHeight; i += 6)
+        for (int i = 0; i < _mapHeight; i += _horizontalCanyonsPeriod)
         {
             GenerateRandomHorizontalPath(generatedMap, i, _canyonsWidth);
         }

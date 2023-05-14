@@ -53,6 +53,7 @@ public class Game : MonoBehaviour
     private List<GameTile> _busyPath;
     private bool _currentPathIsViolated;
     private Unit _unit;
+    private bool _stopGame;
 
     private List<List<GameTile>> _createdPathes = new List<List<GameTile>>();
 
@@ -78,12 +79,14 @@ public class Game : MonoBehaviour
     {
         _sandstorm.SetSpeed(Vector3.zero);
         _onLose?.Invoke();
+        _stopGame = true;
     }
 
     public void Win()
     {
         _sandstorm.SetSpeed(Vector3.zero);
         _onWin?.Invoke();
+        _stopGame = true;
     }
 
     private void UnitWentOnNewTile(GameTile tile)
@@ -135,6 +138,7 @@ public class Game : MonoBehaviour
 
     private void Update()
     {
+        if (_stopGame) return;
         if (Input.GetMouseButtonDown(0))
         {
             StartPathSelection();

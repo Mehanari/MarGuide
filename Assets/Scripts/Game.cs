@@ -7,8 +7,7 @@ public class Game : MonoBehaviour
 {
     [Header("Difficulty options")]
     [SerializeField] private DifficultyConfig _difficultyConfig;
-    [SerializeField] private bool _chooseSelectedDifficulty;
-    [SerializeField] private int _difficulty;
+    [SerializeField] private int _startDifficulty;
 
     [Header("Map options")]
     [SerializeField] private GameBoard _board;
@@ -59,16 +58,7 @@ public class Game : MonoBehaviour
 
     private void Start()
     {
-        int difficulty;
-        if (_chooseSelectedDifficulty)
-        {
-            difficulty = _difficulty;
-        }
-        else
-        {
-            difficulty = GlobalDifficulty.Difficulty;
-        }
-
+        int difficulty = GlobalDifficulty.Difficulty + _startDifficulty;
         var diffConfig = _difficultyConfig.GetDifficulty(difficulty);
         var mapGenerator = new MapGenerator(diffConfig.GenerationParameters);
         _generatedMapSize = diffConfig.GenerationParameters.GeneratedMapSize;
@@ -79,6 +69,7 @@ public class Game : MonoBehaviour
         PlaceBase(diffConfig.GenerationParameters);
         _maxZReached = (int)_lastTileOnPath.transform.position.z;
         _sandstorm.SetSpeed(diffConfig.SandstormSpeed);
+        _sandstorm.transform.position = diffConfig.SandstormSpawnPosition;
 
         UpdateOxygen(diffConfig.StartOxygen);
     }
@@ -98,8 +89,13 @@ public class Game : MonoBehaviour
         int startPartLength = parameters.StartPartLength;
         int endPartLength = parameters.EndPartLength;
         int borderWidth = parameters.BorderWidth;
-        var baseTile = _board.GetTile(startPartLength + _generatedMapSize.x + endPartLength / 2, borderWidth + _generatedMapSize.y / 2);
+        var baseTile = _board.GetTile(startPartLength + _generatedMapSize.x + endPartLength, borderWidth + _generatedMapSize.y/2);
         _baseObject.transform.position = baseTile.transform.position;
+    }
+
+    public void IncreaseDifficulty()
+    {
+        GlobalDifficulty.IncreaseDifficulty();
     }
 
     public void Lose()

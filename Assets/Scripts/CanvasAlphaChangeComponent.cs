@@ -39,6 +39,7 @@ public class CanvasAlphaChangeComponent : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         _onComplete?.Invoke();
+        _canvasGroup.alpha = endAlpha;
         _elapsedTime = 0f;
     }
 }

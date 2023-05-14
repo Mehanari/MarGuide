@@ -25,6 +25,7 @@ public class DifficultyLevel
     public int OxygenChunkSize;
     public int StartOxygen;
     public int OxygenTankAmount;
+    public Vector3 SandstormSpawnPosition;
     public Vector3 SandstormSpeed;
 }
 

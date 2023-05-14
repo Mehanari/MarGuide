@@ -324,6 +324,24 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 3d06aeff323c92c41b0bc91f4a25877c, type: 3}
   m_PrefabInstance: {fileID: 2139064169025352022}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1255961509587618823 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 3d06aeff323c92c41b0bc91f4a25877c, type: 3}
+  m_PrefabInstance: {fileID: 2139064169025352022}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &5041044152683301774
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1255961509587618823}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.025546763, y: 0.024512602, z: 0.023218885}
+  m_Center: {x: -0.0000000013969839, y: -0.00002593501, z: 0.0116094425}
 --- !u!4 &1884126398998173373 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3d06aeff323c92c41b0bc91f4a25877c, type: 3}

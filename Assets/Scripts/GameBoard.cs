@@ -4,7 +4,7 @@ using UnityEngine;
 public class GameBoard : MonoBehaviour
 {
     [SerializeField] private GameTile _tilePrefab;
-    [SerializeField] private GameObject _oxygenTankPrefab;
+    [SerializeField] private Oxygen _oxygenTankPrefab;
     [SerializeField] private LayerMask _tilesMask;
 
     private TileViewFactory _viewFactory;
@@ -13,17 +13,15 @@ public class GameBoard : MonoBehaviour
     private TileType[,] _typeMap;
     private GameTile[,] _tiles;
 
-    public void InitializeBoard(Vector2Int size, int startPartLength, int endPartLength, int mapBorderWidth, MapGenerator generator, int oxygenChunkSize, TileViewFactory factory)
+    public void InitializeBoard(MapGenerator generator, int oxygenChunkSize, int oxygenTankAount, TileViewFactory factory)
     {
-        _boardSize = size;
-        _boardSize.x += startPartLength + endPartLength + 2*mapBorderWidth;
-        _boardSize.y += 2 * mapBorderWidth;
         _generator = generator;
+        _typeMap = _generator.GenerateMap();
+        _boardSize = new Vector2Int(_typeMap.GetLength(0), _typeMap.GetLength(1));
         _viewFactory = factory;
         _tiles = new GameTile[_boardSize.x, _boardSize.y];
-        _typeMap = _generator.GenerateMap(size.x, size.y, startPartLength, endPartLength, mapBorderWidth);
         GenerateTiles();
-        PlaceOxygen(oxygenChunkSize);
+        PlaceOxygen(oxygenChunkSize, oxygenTankAount);
     }
 
     private void GenerateTiles()
@@ -47,7 +45,7 @@ public class GameBoard : MonoBehaviour
         _tiles[x, y].SetView(_viewFactory.GetView(_tiles[x, y].Type), rotation);
     }
 
-    private void PlaceOxygen(int chunkSize)
+    private void PlaceOxygen(int chunkSize, int tankAmount)
     {
         int startX = 0;
         int startY = 0;
@@ -59,7 +57,8 @@ public class GameBoard : MonoBehaviour
                 if (groundTiles.Count > 0)
                 {
                     int tileIndex = Random.Range(0, groundTiles.Count);
-                    PlaceOxygenOnTile(groundTiles[tileIndex]);
+                    var oxygen = PlaceOxygenOnTile(groundTiles[tileIndex]);
+                    oxygen.SetAmount(tankAmount);
 
                 }
                 startY += chunkSize;
@@ -88,10 +87,11 @@ public class GameBoard : MonoBehaviour
         return groundTiles;
     }
 
-    private void PlaceOxygenOnTile(GameTile tile)
+    private Oxygen PlaceOxygenOnTile(GameTile tile)
     {
         var oxygen = Instantiate(_oxygenTankPrefab);
         oxygen.transform.localPosition = tile.transform.localPosition;
+        return oxygen;
     }
 
     public GameTile GetTile(Ray ray)

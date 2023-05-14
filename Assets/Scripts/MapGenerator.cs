@@ -68,6 +68,10 @@ public class MapGenerator : MonoBehaviour
                 else
                 {
                     map[i, j] = TileType.Acid;
+                    if (j == _mapWidth - 1 || j == 0)
+                    {
+                        map[i, j] = TileType.Ground;
+                    }
                 }
             }
         }

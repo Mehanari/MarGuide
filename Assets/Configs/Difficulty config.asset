@@ -49,15 +49,95 @@ MonoBehaviour:
       AcidLakesDensity: 45
       AcidLakesGenerationIterationsCount: 2
       PathPartMaxLength: 3
-      CanyonsWidth: 2
+      CanyonsWidth: 3
       VerticalCanyonsPeriod: 10
       HorizontalCanyonsPeriod: 6
       StartPartLength: 10
       EndPartLength: 10
       BorderWidth: 5
-      GeneratedMapSize: {x: 150, y: 30}
-    OxygenChunkSize: 12
+      GeneratedMapSize: {x: 100, y: 30}
+    OxygenChunkSize: 10
     StartOxygen: 20
-    OxygenTankAmount: 12
+    OxygenTankAmount: 14
     SandstormSpawnPosition: {x: 0, y: 5.5, z: -8}
     SandstormSpeed: {x: 0, y: 0, z: 1}
+  - GenerationParameters:
+      AcidLakesDensity: 45
+      AcidLakesGenerationIterationsCount: 2
+      PathPartMaxLength: 3
+      CanyonsWidth: 2
+      VerticalCanyonsPeriod: 12
+      HorizontalCanyonsPeriod: 10
+      StartPartLength: 10
+      EndPartLength: 10
+      BorderWidth: 5
+      GeneratedMapSize: {x: 125, y: 30}
+    OxygenChunkSize: 12
+    StartOxygen: 25
+    OxygenTankAmount: 16
+    SandstormSpawnPosition: {x: 0, y: 5.5, z: -8}
+    SandstormSpeed: {x: 0, y: 0, z: 1}
+  - GenerationParameters:
+      AcidLakesDensity: 45
+      AcidLakesGenerationIterationsCount: 2
+      PathPartMaxLength: 3
+      CanyonsWidth: 2
+      VerticalCanyonsPeriod: 15
+      HorizontalCanyonsPeriod: 15
+      StartPartLength: 10
+      EndPartLength: 10
+      BorderWidth: 5
+      GeneratedMapSize: {x: 125, y: 30}
+    OxygenChunkSize: 12
+    StartOxygen: 30
+    OxygenTankAmount: 20
+    SandstormSpawnPosition: {x: 0, y: 5.5, z: -8}
+    SandstormSpeed: {x: 0, y: 0, z: 1}
+  - GenerationParameters:
+      AcidLakesDensity: 5
+      AcidLakesGenerationIterationsCount: 2
+      PathPartMaxLength: 3
+      CanyonsWidth: 1
+      VerticalCanyonsPeriod: 27
+      HorizontalCanyonsPeriod: 5
+      StartPartLength: 10
+      EndPartLength: 10
+      BorderWidth: 5
+      GeneratedMapSize: {x: 150, y: 30}
+    OxygenChunkSize: 12
+    StartOxygen: 30
+    OxygenTankAmount: 19
+    SandstormSpawnPosition: {x: 0, y: 5.5, z: -8}
+    SandstormSpeed: {x: 0, y: 0, z: 1}
+  - GenerationParameters:
+      AcidLakesDensity: 45
+      AcidLakesGenerationIterationsCount: 4
+      PathPartMaxLength: 3
+      CanyonsWidth: 2
+      VerticalCanyonsPeriod: 15
+      HorizontalCanyonsPeriod: 8
+      StartPartLength: 10
+      EndPartLength: 10
+      BorderWidth: 5
+      GeneratedMapSize: {x: 150, y: 30}
+    OxygenChunkSize: 15
+    StartOxygen: 30
+    OxygenTankAmount: 20
+    SandstormSpawnPosition: {x: 0, y: 5.5, z: -8}
+    SandstormSpeed: {x: 0, y: 0, z: 1}
+  - GenerationParameters:
+      AcidLakesDensity: 45
+      AcidLakesGenerationIterationsCount: 4
+      PathPartMaxLength: 3
+      CanyonsWidth: 3
+      VerticalCanyonsPeriod: 10
+      HorizontalCanyonsPeriod: 8
+      StartPartLength: 10
+      EndPartLength: 10
+      BorderWidth: 5
+      GeneratedMapSize: {x: 175, y: 30}
+    OxygenChunkSize: 10
+    StartOxygen: 30
+    OxygenTankAmount: 14
+    SandstormSpawnPosition: {x: 0, y: 5.5, z: -8}
+    SandstormSpeed: {x: 0, y: 0, z: 1.25}

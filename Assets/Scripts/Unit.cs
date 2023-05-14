@@ -81,15 +81,17 @@ public class Unit : MonoBehaviour
             }
             if (ReachedTile(_tileTo))
             {
+                transform.position = _tileTo.transform.position;
                 if (_path.Count > 0)
                 {
                     _tileTo = _path.Dequeue();
                     OnNewTileSet?.Invoke(_tileTo);
-                    _rotationFrom = ValidateRotation(transform.eulerAngles);
+                    _rotationFrom = transform.eulerAngles;
                     transform.LookAt(_tileTo.transform);
-                    _rotationTo = ValidateRotation(transform.eulerAngles);
+                    _rotationTo = transform.eulerAngles;
                     transform.eulerAngles = _rotationFrom;
                     _rotationProgress = 0f;
+                    NormalizeRotations();
                 }
                 else
                 {
@@ -100,13 +102,16 @@ public class Unit : MonoBehaviour
         }
     }
 
-    private Vector3 ValidateRotation(Vector3 rotation)
+    private void NormalizeRotations()
     {
-        if (rotation.y > 180)
+        if (_rotationFrom.y == 270 && _rotationTo.y == 0)
         {
-            rotation.y = -360 + rotation.y;
+            _rotationFrom.y = -360 + _rotationFrom.y;
         }
-        return rotation;
+        else if (_rotationTo.y == 270 && _rotationFrom.y == 0)
+        {
+            _rotationTo.y = -360 + _rotationTo.y;
+        }
     }
 
     private bool ReachedTile(GameTile tile)

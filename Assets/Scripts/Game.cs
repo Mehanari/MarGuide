@@ -98,6 +98,11 @@ public class Game : MonoBehaviour
         GlobalDifficulty.IncreaseDifficulty();
     }
 
+    public void ResetDifficulty()
+    {
+        GlobalDifficulty.ResetDifficulty();
+    }
+
     public void Lose()
     {
         _sandstorm.SetSpeed(Vector3.zero);

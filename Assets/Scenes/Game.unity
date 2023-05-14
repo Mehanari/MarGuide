@@ -10880,7 +10880,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 694377148}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2047020145}
+        m_TargetAssemblyTypeName: CanvasAlphaChangeComponent, Assembly-CSharp
+        m_MethodName: ChangeAlphaToNew
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 1
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2030286192}
+        m_TargetAssemblyTypeName: Game, Assembly-CSharp
+        m_MethodName: ResetDifficulty
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &694377148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13215,7 +13239,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1464366969}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2047020145}
+        m_TargetAssemblyTypeName: CanvasAlphaChangeComponent, Assembly-CSharp
+        m_MethodName: ChangeAlphaToNew
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 1
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2030286192}
+        m_TargetAssemblyTypeName: Game, Assembly-CSharp
+        m_MethodName: ResetDifficulty
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1464366969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19268,6 +19316,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2047020144}
   - component: {fileID: 2047020145}
+  - component: {fileID: 2047020146}
   m_Layer: 5
   m_Name: ToMenu
   m_TagString: Untagged
@@ -19308,10 +19357,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canvasGroup: {fileID: 242235033}
-  _changeTime: 0
+  _changeTime: 0.5
   _onComplete:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2047020146}
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: MainMenu
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2047020146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2047020143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a56651430decd6347966e3dd3c8687d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2054404011
 GameObject:
   m_ObjectHideFlags: 0
@@ -24210,7 +24283,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2116768107}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1293353082}
+        m_TargetAssemblyTypeName: CanvasAlphaChangeComponent, Assembly-CSharp
+        m_MethodName: ChangeAlphaToNew
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 1
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2116768107
 MonoBehaviour:
   m_ObjectHideFlags: 0

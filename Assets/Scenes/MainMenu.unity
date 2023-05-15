@@ -371,6 +371,7 @@ GameObject:
   - component: {fileID: 364736880}
   - component: {fileID: 364736883}
   - component: {fileID: 364736884}
+  - component: {fileID: 364736885}
   m_Layer: 5
   m_Name: ToggleMusic
   m_TagString: Untagged
@@ -518,7 +519,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mixer: {fileID: 24100000, guid: 57725278b1300b549a45a34a1e06f89b, type: 2}
   _playerPrefsTag: Music
-  _volumeVariableTag: Music
+  _volumeVariableTag: SoundVolume
   _onToggleOn:
     m_PersistentCalls:
       m_Calls:
@@ -549,6 +550,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &364736885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 364736878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5309b22c2525ad42a977aab4f5cde3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _image: {fileID: 364736881}
+  _threshold: 1
 --- !u!1 &425240919
 GameObject:
   m_ObjectHideFlags: 0

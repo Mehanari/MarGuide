@@ -11271,7 +11271,7 @@ AudioSource:
   m_GameObject: {fileID: 1122387569}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -4585400806544373783, guid: 57725278b1300b549a45a34a1e06f89b, type: 2}
   m_audioClip: {fileID: 8300000, guid: 1ace68cb442210343b23c56eca65ffe0, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.2
@@ -19076,7 +19076,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _difficultyConfig: {fileID: 11400000, guid: 7e38ef2f07e5a9544970705bc0ecb4a4, type: 2}
-  _startDifficulty: 10
+  _startDifficulty: 0
   _board: {fileID: 2038471160}
   _unitSpawnPoint: {x: 7, y: 23}
   _viewFactory: {fileID: 2030286193}
